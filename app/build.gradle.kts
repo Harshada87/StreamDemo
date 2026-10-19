@@ -64,6 +64,10 @@ dependencies {
     //Coroutine Test
     testImplementation(libs.kotlinx.coroutines.test)
 
+    //lifecycle Runtime compose
+    implementation(libs.android.lifecycle.runtime.compose)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
