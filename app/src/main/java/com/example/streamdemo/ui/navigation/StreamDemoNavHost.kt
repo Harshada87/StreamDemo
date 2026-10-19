@@ -7,10 +7,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.streamdemo.ui.login.LoginScreen
 import com.example.streamdemo.ui.player.PlayerScreen
 import com.example.streamdemo.ui.videoList.VideoListScreen
 
 object Routes{
+    const val LOGIN = "login"
     const val LIST = "list"
     const val PLAYER = "player/{videoId}"
     const val VIDEO_ID = "videoId"
@@ -23,9 +25,20 @@ fun StreamDemoNavHost(modifier: Modifier = Modifier){
 
     NavHost(
         navController = navController,
-        startDestination = Routes.LIST,
+        startDestination = Routes.LOGIN,
         modifier = modifier
     ){
+        composable(Routes.LOGIN) {
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(Routes.LIST){
+                        popUpTo(Routes.LOGIN){inclusive = true}
+                    }
+                }
+            )
+        }
+
+
         composable(Routes.LIST) {
             VideoListScreen(
                 onVideoClick = { id -> navController.navigate(Routes.player(id)) }
@@ -41,7 +54,6 @@ fun StreamDemoNavHost(modifier: Modifier = Modifier){
         ) { backStackEntry ->
             val videoId = backStackEntry.arguments?. getString(Routes.VIDEO_ID)
 
-            //Temp placeholder : the real PlayerScreen comes in
 
             PlayerScreen()
         }
