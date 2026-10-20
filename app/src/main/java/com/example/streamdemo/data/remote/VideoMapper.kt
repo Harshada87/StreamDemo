@@ -3,6 +3,7 @@ package com.example.streamdemo.data.remote
 import com.example.streamdemo.data.model.Video
 import com.example.streamdemo.data.model.VideoType
 
+//Checks each item and turns it into a safe Video, or rejects it
 fun VideoDto.toVideoOrNull(): Video?{
 
     val videoType: VideoType = when (type.lowercase()){
