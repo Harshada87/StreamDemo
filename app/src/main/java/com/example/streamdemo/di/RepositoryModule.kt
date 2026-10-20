@@ -2,7 +2,7 @@ package com.example.streamdemo.di
 
 import com.example.streamdemo.data.auth.AuthRepository
 import com.example.streamdemo.data.auth.InMemoryAuthRepository
-import com.example.streamdemo.data.repository.LocalVideoRepository
+import com.example.streamdemo.data.repository.RemoteVideoRepository
 import com.example.streamdemo.data.repository.VideoRepository
 import dagger.Binds
 import dagger.Module
@@ -16,7 +16,7 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindVideoRepository(impl: LocalVideoRepository): VideoRepository
+    abstract fun bindVideoRepository(impl: RemoteVideoRepository): VideoRepository
 
     @Binds
     @Singleton
