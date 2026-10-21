@@ -19,12 +19,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: VideoRepository,
     private val authRepository: AuthRepository,
+
     @ApplicationContext context: Context
 ): ViewModel() {
 
@@ -33,6 +34,9 @@ class PlayerViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(PlayerUiState())
     val uiState: StateFlow<PlayerUiState> = _uiState.asStateFlow()
+
+    private val playbackStatsTracker = PlaybackStatsTracker()
+    val playbackStats: StateFlow<PlaybackStats> = playbackStatsTracker.playbackStats
 
     private var resumeOnStart = false
 
@@ -49,6 +53,7 @@ class PlayerViewModel @Inject constructor(
 
     init {
         player.addListener(playerListener)
+        player.addAnalyticsListener(playbackStatsTracker)
         loadVideo()
     }
 
@@ -62,6 +67,7 @@ class PlayerViewModel @Inject constructor(
 
             _uiState.update { it.copy(title = video.title) }
             player.setMediaItem(video.toMediaItem(authRepository.token.value))
+            playbackStatsTracker.onPlaybackRequested()
             player.prepare()
             player.playWhenReady = true
         }
@@ -69,6 +75,7 @@ class PlayerViewModel @Inject constructor(
 
     override fun onCleared() {
         player.removeListener(playerListener)
+        player.removeAnalyticsListener(playbackStatsTracker)
         player.release()
         super.onCleared()
     }

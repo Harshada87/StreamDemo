@@ -25,6 +25,7 @@ fun PlayerScreen(
     viewModel: PlayerViewModel = hiltViewModel()
 ){
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val playbackStats by viewModel.playbackStats.collectAsStateWithLifecycle()
 
     //Pause when the app goes to the background (home button, phone call)
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) {
@@ -42,6 +43,10 @@ fun PlayerScreen(
             },
             onRelease = { playerView -> playerView.player = null },
             modifier = Modifier.fillMaxSize()
+        )
+        PlaybackStatsOverlay(
+            playbackStats = playbackStats,
+            modifier = Modifier.align(Alignment.TopEnd).padding(16.dp)
         )
 
         Text(
