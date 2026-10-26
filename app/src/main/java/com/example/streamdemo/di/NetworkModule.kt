@@ -24,7 +24,7 @@ object NetworkModule {
         ignoreUnknownKeys = true  //server adds a new field? ignore it, don't crash
     }
 
-    //Recipe 2 : how to build Retrofit (uses REcipe 1)
+    //Recipe 2 : how to build Retrofit (uses Recipe 1)
     @Provides
     @Singleton
     fun provideRetrofit(json: Json): Retrofit =

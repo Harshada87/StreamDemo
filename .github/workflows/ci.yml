@@ -1,0 +1,44 @@
+name: CI
+
+# When to run: on every pull request to main, and on every push to main
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download the code
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # 2. Install Java (match your Android Studio Gradle JDK)
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # 3. Set up Gradle with caching, so later runs are faster
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # 4. Allow the Gradle wrapper script to run
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      # 5. Build, lint, and run unit tests
+      - name: Build, lint and unit tests
+        run: ./gradlew assembleDebug lintDebug testDebugUnitTest
+
+      # 6. If something failed, keep the reports so you can read them
+      - name: Upload reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: '**/build/reports/'
