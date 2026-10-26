@@ -14,18 +14,18 @@ jobs:
     steps:
       # 1. Download the code
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # 2. Install Java (match your Android Studio Gradle JDK)
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
 
       # 3. Set up Gradle with caching, so later runs are faster
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       # 4. Allow the Gradle wrapper script to run
       - name: Make gradlew executable
