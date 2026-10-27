@@ -65,7 +65,7 @@ dependencies {
     //Coroutine Test
     testImplementation(libs.kotlinx.coroutines.test)
 
-    //lifecycle Runtime compose00000000000000000000000000000
+    //lifecycle Runtime compose
     implementation(libs.android.lifecycle.runtime.compose)
 
     //Retrofit
@@ -73,7 +73,8 @@ dependencies {
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialization.json)
 
-
+    //core:model
+    implementation(project(":core:model"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
