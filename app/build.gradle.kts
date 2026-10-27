@@ -76,6 +76,9 @@ dependencies {
     //core:model
     implementation(project(":core:model"))
 
+    //core:data
+    implementation(project(":core:data"))
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
