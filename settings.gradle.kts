@@ -22,4 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "StreamDemo"
 include(":app")
 include(":core:model")
+include(":core:data")
  
